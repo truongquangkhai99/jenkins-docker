@@ -1,0 +1,25 @@
+version: '3'
+## Build jar file of springboot app before use docker-compose
+services:
+  jpa_mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=123abc
+      - MYSQL_DATABASE=jpa_db01
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=user123
+    ports:
+      - 3306:3306
+    volumes:
+      - /data/mysql
+  spring-boot-jpa-app:
+    image: spring-boot-jpa-image
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - jpa_mysql
+    ports:
+      - 18000:8095
+    volumes:
+      - /data/spring-boot-app
