@@ -14,7 +14,7 @@ node {
 	}
 	stage('Run Docker Container') {
 		// don't run remove container in the first build, it can appear a error 'no such container'
-		bat "docker rm springboot-jenkins-container -f"
+		bat "docker rm springboot-jenkins-container -f || true"
 		bat "docker run --name springboot-jenkins-container -p 18000:8095 --link jpa_mysql:mysql -it -d springboot-jenkins-image"
 	}
 }
